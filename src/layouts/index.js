@@ -11,7 +11,7 @@ const SubMenu = Menu.SubMenu;
 
 export default class BasicLayout extends Component {
   render() {
-    return (
+    return (this.props.location.pathname === '/login'?this.props.children:
       <Layout>
         <Sider width={256} style={{ minHeight: '100vh' }}>
           <div style={{ height: '32px', background: 'rgba(255,255,255,.2)', margin: '16px'}}/>
@@ -38,7 +38,7 @@ export default class BasicLayout extends Component {
               {this.props.children}
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+          <Footer style={{ textAlign: 'center' }}>Nora ©2019 Created by Taylor</Footer>
         </Layout>
       </Layout>
     )
