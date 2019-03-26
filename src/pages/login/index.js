@@ -34,7 +34,7 @@ class Index extends Component {
       <div >
         <form className={styles.form}>
           <div className={styles.title}>
-            <span>欢迎登陆Nora项目</span>
+            <span>欢迎登录Nora项目</span>
           </div>
           <FormItem hasFeedback>
             {getFieldDecorator('username', {
