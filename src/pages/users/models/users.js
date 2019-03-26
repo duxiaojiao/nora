@@ -13,8 +13,8 @@ export default {
   },
   effects: {
     *fetch({ payload: { page } }, { call, put }) {
-      const { data, headers } = yield call(usersService.fetch, { page });
-      yield put({ type: 'save', payload: { data, total: headers['x-total-count'] } });
+      const response = yield call(usersService.fetch, { page });
+      yield put({ type: 'save', payload: {response,total:5 }});
     },
   },
   subscriptions: {
