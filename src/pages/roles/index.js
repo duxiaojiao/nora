@@ -8,21 +8,17 @@ class Index extends Component {
 
   render(){
     const columns = [{
-      title: '登陆账号',
-      dataIndex: 'account',
-      key: 'account',
+      title: '角色名称',
+      dataIndex: 'role',
+      key: 'role',
     }, {
-      title: '用户名',
-      dataIndex: 'name',
-      key: 'name',
+      title: '角色别名',
+      dataIndex: 'roleName',
+      key: 'roleName',
     }, {
-      title: '手机号码',
-      dataIndex: 'phone',
-      key: 'phone',
-    }, {
-      title: '邮箱',
-      key: 'email',
-      dataIndex: 'email',
+      title: '创建时间',
+      dataIndex: 'date',
+      key: 'date',
     }, {
       title: '操作',
       key: 'action',
@@ -37,16 +33,14 @@ class Index extends Component {
 
     const data = [{
       key: '1',
-      account:'admin',
-      name: '管理员',
-      phone: '15821392942',
-      email: '376525082@qq.com',
+      role:'admin',
+      roleName: '管理员',
+      date: '2019-03-27',
     }, {
       key: '2',
-      account:'guest',
-      name: '游客',
-      phone: '15878921234',
-      email: 'wangyi@163.com',
+      role:'user',
+      roleName: '用户',
+      date: '2019-03-27',
     }
     ];
 

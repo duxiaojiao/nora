@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Layout, Icon, Dropdown, Avatar, Menu, Spin } from 'antd';
 import { connect } from 'dva';
 import Link from 'umi/link';
+import SideBar from './side';
 import styles from './index.css';
 
 
@@ -59,27 +60,49 @@ class BasicLayout extends Component {
     }
   };
 
+  onSelect = (data) => {
+    this.props.dispatch({
+      type: 'global/onselect',
+      payload: data,
+    });
+  };
+  onOpenChange = (data) => {
+    this.props.dispatch({
+      type: 'global/onopen',
+      payload: data,
+    });
+  };
+
 
   render() {
+    const { props, global: { openKeys, selectedKeys, collapsed }, logoutLoding } = this.props;
     return (this.props.location.pathname === '/login'?this.props.children:
       <Layout>
-        <Sider width={256} style={{ minHeight: '100vh' }}>
-          <div style={{ height: '32px', background: 'rgba(255,255,255,.2)', margin: '16px'}}/>
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
-              <Icon type="home" />
-              <span>首页</span>
-              <Link to="/"></Link>
-            </Menu.Item>
-            <SubMenu
-              key="sub1"
-              title={<span><Icon type="security-scan" /><span>权限管理</span></span>}
-            >
-              <Menu.Item key="2"><Link to="/users"><Icon type="team" />用户管理</Link></Menu.Item>
-              <Menu.Item key="3"><Link to="/users"><Icon type="solution" />角色管理</Link></Menu.Item>
-              <Menu.Item key="4"><Link to="/users"><Icon type="profile" />菜单管理</Link></Menu.Item>
-            </SubMenu>
-          </Menu>
+        {/*<Sider width={256} style={{ minHeight: '100vh' }}>*/}
+          {/*<div style={{ height: '32px', background: 'rgba(255,255,255,.2)', margin: '16px'}}/>*/}
+          {/*<Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>*/}
+            {/*<Menu.Item key="1"><Icon type="home" /><span>首页</span><Link to="/"></Link></Menu.Item>*/}
+            {/*<SubMenu key="sub1" title={<span><Icon type="security-scan" /><span>权限管理</span></span>}*/}
+            {/*>*/}
+              {/*<Menu.Item key="2"><Link to="/users"><Icon type="team" />用户管理</Link></Menu.Item>*/}
+              {/*<Menu.Item key="3"><Link to="/users"><Icon type="solution" />角色管理</Link></Menu.Item>*/}
+              {/*<Menu.Item key="4"><Link to="/users"><Icon type="profile" />菜单管理</Link></Menu.Item>*/}
+            {/*</SubMenu>*/}
+          {/*</Menu>*/}
+        {/*</Sider>*/}
+        <Sider
+          width={256}
+          style={{ minHeight: '100vh' }}
+        >
+          <div className={styles.logo}><h2>Nora</h2></div>
+          <SideBar
+            //collapsed={this.state.collapsed}
+            collapsed={false}
+            onSelect={this.onSelect}
+            onOpenChange={this.onOpenChange}
+            openKeys={openKeys}
+            selectedKeys={selectedKeys}
+          />
         </Sider>
         <Layout >
           <Header style={{ background: '#fff', textAlign: 'right', paddingRight: 0 }}>
