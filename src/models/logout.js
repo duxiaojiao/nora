@@ -16,7 +16,7 @@ export default {
     * platformLogout({ payload }, { call }) {
       const response = yield call(logout, payload);
       if (response && response[isSuccess] === true) {
-        sessionStorage.removeItem(platformToken);
+        localStorage.removeItem(platformToken);
         router.push('/login');
       } else {
         message.error(response.error_info.msg);

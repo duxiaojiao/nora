@@ -7,8 +7,6 @@ const Api = {
 
     const randomValue = parseInt(Math.random() * 100, 10);
 
-    console.log('测试'+JSON.stringify(req.body)+username+password+''+randomValue);
-
     if (username === 'admin' && password === '123456' && randomValue > 5) {
       res.send(JSON.stringify({
         'error_info': null,

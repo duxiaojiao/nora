@@ -13,7 +13,7 @@ const SubMenu = Menu.SubMenu;
 const UserMenu = (props) => {
   const handleMenuClick = ({ key }) => {
     if (key === '3') {
-      sessionStorage.clear();
+      localStorage.clear();
       props.props.dispatch({
         type: 'logoutToNamespace/platformLogout',
       });
