@@ -3,18 +3,34 @@ import * as usersService from '../services/users';
 export default {
   namespace: 'users',
   state: {
-    list: [],
+    usersList: [],
     total: null,
   },
   reducers: {
-    save(state, { payload: { data: list, total } }) {
-      return { ...state, list, total };
-    },
+    saveList(state, { payload: { usersList } }) {
+      return {
+        ...state,
+        usersList,
+      }
+    }
   },
   effects: {
-    *fetch({ payload: { page } }, { call, put }) {
-      const response = yield call(usersService.fetch, { page });
-      yield put({ type: 'save', payload: {response,total:5 }});
+    *queryList({ _ }, { call, put }) {
+      const response = yield call(usersService.queryList);
+      console.log(response);
+      yield put({ type: 'saveList', payload: { usersList: response } });
+    },
+    *deleteUser({ payload }, { call, put }) {
+      const response = yield call(usersService.deleteUser, payload);
+      yield put({ type: 'queryList' });
+      console.log(response);
+      return response;
+    },
+    *addUser({ payload }, { call, put }) {
+      const response = yield call(usersService.addUser, payload);
+      yield put({ type: 'queryList' });
+      console.log(response);
+      return response;
     },
   },
   subscriptions: {

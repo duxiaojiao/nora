@@ -10,6 +10,10 @@ export default {
 
   platformMenuList: '/platform/menu/list',
 
+  platformUserList:'/platform/user/list',
+  platformUserDelete:'/platform/user/delete',
+  platformUserAdd:'/platform/user/add',
+  platformUserEdit:'/platform/user/edit',
 
   platformRolePage: '/platform/role/page',
   platformRoleObject: '/platform/role/object',
