@@ -3,12 +3,13 @@ import { Modal, Form, Input } from 'antd';
 
 const FormItem = Form.Item;
 
-class UserEditModal extends Component {
+class UserModal extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       visible: false,
+      destroy:false
     };
   }
 
@@ -22,6 +23,7 @@ class UserEditModal extends Component {
   hideModelHandler = () => {
     this.setState({
       visible: false,
+      destroy:true
     });
   };
 
@@ -36,9 +38,9 @@ class UserEditModal extends Component {
   };
 
   render() {
-    const { children } = this.props;
+    const { children,title } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { name, email, website } = this.props.record;
+    const { account, name, phone,email } = this.props.record;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
@@ -50,41 +52,56 @@ class UserEditModal extends Component {
           { children }
         </span>
         <Modal
-          title="Edit User"
+          title={title}
           visible={this.state.visible}
+          destroyOnClose={this.state.destroy}
           onOk={this.okHandler}
           onCancel={this.hideModelHandler}
         >
-          <Form horizontal onSubmit={this.okHandler}>
+          <Form  onSubmit={this.okHandler}>
             <FormItem
               {...formItemLayout}
-              label="Name"
+              label="登陆账号"
             >
-              {
-                getFieldDecorator('name', {
-                  initialValue: name,
-                })(<Input />)
-              }
+              {getFieldDecorator('account', {
+                rules: [{ required: true }],
+                initialValue: account,
+              })(
+                <Input />
+              )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="Email"
+              label="用户名"
             >
-              {
-                getFieldDecorator('email', {
-                  initialValue: email,
-                })(<Input />)
-              }
+              {getFieldDecorator('name',{
+                rules: [{ required: true }],
+                initialValue: name,
+              })(
+                <Input />
+              )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="Website"
+              label="手机号码"
             >
-              {
-                getFieldDecorator('website', {
-                  initialValue: website,
-                })(<Input />)
-              }
+              {getFieldDecorator('phone',{
+                initialValue: phone,
+              })
+              (
+                <Input />
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="邮箱"
+            >
+              {getFieldDecorator('email',{
+                initialValue: email,
+              })
+              (
+                <Input />
+              )}
             </FormItem>
           </Form>
         </Modal>
@@ -93,4 +110,4 @@ class UserEditModal extends Component {
   }
 }
 
-export default Form.create()(UserEditModal);
+export default Form.create()(UserModal);

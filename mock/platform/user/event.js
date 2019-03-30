@@ -51,4 +51,13 @@ export default {
       success: true,
     });
   },
+
+  'post /platform/user/edit': function (req, res) {
+    const { key, values} = req.body;
+    data=data.map(item =>(item.key===key?{key,...values}:item));
+    console.log(data);
+    res.json({
+      success: true,
+    });
+  },
 }

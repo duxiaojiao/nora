@@ -32,6 +32,12 @@ export default {
       console.log(response);
       return response;
     },
+    *editUser({ payload}, { call, put}) {
+      const response = yield call(usersService.editUser, payload);
+      yield put({ type: 'queryList' });
+      console.log(response);
+      return response;
+    },
   },
   subscriptions: {
     setup({ dispatch, history }) {

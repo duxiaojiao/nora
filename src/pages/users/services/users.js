@@ -11,3 +11,7 @@ export function deleteUser(data) {
 export function addUser(data) {
   return request.post(request.api.platformUserAdd,data);
 }
+
+export function editUser(data) {
+  return request.post(request.api.platformUserEdit,data);
+}

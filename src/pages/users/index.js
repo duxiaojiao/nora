@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import { Table, Divider, Modal, Button, Form, Input,Popconfirm } from 'antd';
+import { Table, Divider,Button, Form,Popconfirm } from 'antd';
 import { connect } from 'dva';
-
-const FormItem = Form.Item;
+import UserModal from './components/UserModal';
+import styles from './index.less';
 
 class Index extends Component {
-
-  state = {
-    visible: false
-  };
 
    columns = [{
     title: '登陆账号',
@@ -31,7 +27,9 @@ class Index extends Component {
     key: 'action',
     render: (text, record) => (
       <span>
-      <a onClick={() => this.editUser(record.key)}>编辑</a>
+        <UserModal record={record} onOk={this.editUser.bind(null, record.key)} title='编辑用户'>
+            <a>编辑</a>
+          </UserModal>
       <Divider type="vertical"/>
                 <Popconfirm title={'确认删除'} okText='确认' cancelText='取消'
                             onConfirm={() => this.deleteUser(record.key)}>
@@ -47,11 +45,18 @@ class Index extends Component {
     });
   }
 
-  editUser = (key) => {
-    // this.props.dispatch({
-    //   type: 'users/editUser',
-    //   payload: {key:key},
-    // });
+  addUser = (values) => {
+    this.props.dispatch({
+      type: 'users/addUser',
+      payload: values,
+    });
+  };
+
+  editUser = (key,values) => {
+    this.props.dispatch({
+      type: 'users/editUser',
+      payload: {key,values},
+    });
   };
 
   deleteUser = (key) => {
@@ -61,77 +66,17 @@ class Index extends Component {
     });
   };
 
-  showModal = () => {
-    this.setState({ visible: true });
-  };
-
-  handleOk = () => {
-    const { dispatch, form: { validateFields } } = this.props;
-
-    validateFields((err, values) => {
-      if (!err) {
-        dispatch({
-          type: 'users/addUser',
-          payload: values,
-        });
-        this.setState({ visible: false });
-      }
-    });
-  }
-
-  handleCancel = () => {
-    this.setState({
-      visible: false,
-    });
-  }
-
-
   render(){
-
-    const { visible } = this.state;
-    const { usersList, usersLoading, form: { getFieldDecorator } } = this.props;
+    const { usersList, usersLoading} = this.props;
 
     return(
       <div>
+        <div className={styles.create}>
+          <UserModal record={{}} onOk={this.addUser} title='添加用户'>
+            <Button type="primary">新增</Button>
+          </UserModal>
+        </div>
         <Table columns={this.columns} dataSource={usersList} loading={usersLoading} />
-
-        <Button onClick={this.showModal} type='primary'>新增</Button>
-
-        <Modal
-          title="添加用户"
-          visible={visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-        >
-          <Form>
-            <FormItem label="登陆账号">
-              {getFieldDecorator('account', {
-                rules: [{ required: true }],
-              })(
-                <Input />
-              )}
-            </FormItem>
-            <FormItem label="用户名">
-              {getFieldDecorator('name',{
-                rules: [{ required: true }],
-              })(
-                <Input />
-              )}
-            </FormItem>
-            <FormItem label="手机号码">
-              {getFieldDecorator('phone')
-              (
-                <Input />
-              )}
-            </FormItem>
-            <FormItem label="邮箱">
-              {getFieldDecorator('email')
-              (
-                <Input />
-              )}
-            </FormItem>
-          </Form>
-        </Modal>
       </div>
     )
   }
