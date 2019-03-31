@@ -15,11 +15,16 @@ export default {
   platformUserAdd:'/platform/user/add',
   platformUserEdit:'/platform/user/edit',
 
-  platformRolePage: '/platform/role/page',
-  platformRoleObject: '/platform/role/object',
-  platformRoleAdd: '/platform/role/add',
-  platformRoleUpdate: '/platform/role/update',
-  platformRoleBatchDelete: '/platform/role/batch-delete',
+
+  platformRoleQuery:'/platform/role/query',
+  platformRoleDelete:'/platform/role/delete',
+  platformRoleAdd:'/platform/role/add',
+  platformRoleEdit:'/platform/role/edit',
+
+  platformMenuQuery:'/platform/menu/query',
+  platformMenuDelete:'/platform/menu/delete',
+  platformMenuAdd:'/platform/menu/add',
+  platformMenuEdit:'/platform/menu/edit',
 
 
   platformLogin: '/platform/login',

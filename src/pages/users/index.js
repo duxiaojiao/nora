@@ -68,6 +68,7 @@ class Index extends Component {
 
   render(){
     const { usersList, usersLoading} = this.props;
+    console.log(this.props);
 
     return(
       <div>
