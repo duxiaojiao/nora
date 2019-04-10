@@ -3,7 +3,7 @@
 export default {
   treeShaking: true,
   outputPath:'./build',
-  base: '/nora',
+  base: '/nora/',
   publicPath: "/nora/",
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
