@@ -8,12 +8,12 @@ class Index extends Component {
 
    columns = [{
     title: '登陆账号',
-    dataIndex: 'account',
-    key: 'account',
+    dataIndex: 'empCode',
+    key: 'empCode',
   }, {
     title: '用户名',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'empName',
+    key: 'empName',
   }, {
     title: '手机号码',
     dataIndex: 'phone',
@@ -27,12 +27,12 @@ class Index extends Component {
     key: 'action',
     render: (text, record) => (
       <span>
-        <UserModal record={record} onOk={this.editUser.bind(null, record.key)} title='编辑用户'>
+        <UserModal record={record} onOk={this.editUser.bind(null, record.guid)} title='编辑用户'>
             <a>编辑</a>
           </UserModal>
       <Divider type="vertical"/>
                 <Popconfirm title={'确认删除'} okText='确认' cancelText='取消'
-                            onConfirm={() => this.deleteUser(record.key)}>
+                            onConfirm={() => this.deleteUser(record.guid)}>
             <a>删除</a>
           </Popconfirm>
     </span>
@@ -59,10 +59,10 @@ class Index extends Component {
     });
   };
 
-  deleteUser = (key) => {
+  deleteUser = (guid) => {
     this.props.dispatch({
       type: 'users/deleteUser',
-      payload: {key:key},
+      payload: {guid:guid},
     });
   };
 

@@ -26,11 +26,11 @@ export default {
     }],
   ],
 
-  "proxy": {
-    "/api": {
-      "target": "http://jsonplaceholder.typicode.com/",
-      "changeOrigin": true,
-      "pathRewrite": { "^/api" : "" }
+  proxy: {
+    "/system": {
+      target: "http://localhost:8100/",
+      changeOrigin: true,
+      // pathRewrite: {"^/system": ""}
     }
   },
 }

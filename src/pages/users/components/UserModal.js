@@ -40,7 +40,7 @@ class UserModal extends Component {
   render() {
     const { children,title } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { account, name, phone,email } = this.props.record;
+    const { empCode, empName, phone,email } = this.props.record;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
@@ -63,9 +63,9 @@ class UserModal extends Component {
               {...formItemLayout}
               label="登陆账号"
             >
-              {getFieldDecorator('account', {
+              {getFieldDecorator('empCode', {
                 rules: [{ required: true }],
-                initialValue: account,
+                initialValue: empCode,
               })(
                 <Input />
               )}
@@ -74,9 +74,9 @@ class UserModal extends Component {
               {...formItemLayout}
               label="用户名"
             >
-              {getFieldDecorator('name',{
+              {getFieldDecorator('empName',{
                 rules: [{ required: true }],
-                initialValue: name,
+                initialValue: empName,
               })(
                 <Input />
               )}

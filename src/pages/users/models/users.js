@@ -18,7 +18,7 @@ export default {
     *queryList({ _ }, { call, put }) {
       const response = yield call(usersService.queryList);
       console.log(response);
-      yield put({ type: 'saveList', payload: { usersList: response } });
+      yield put({ type: 'saveList', payload: { usersList: response.data.records } });
     },
     *deleteUser({ payload }, { call, put }) {
       const response = yield call(usersService.deleteUser, payload);

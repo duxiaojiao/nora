@@ -74,10 +74,10 @@ axios.interceptors.response.use(config => {
 });
 
 
-const get = (url, parmas) => {
+const get = (url, params) => {
   return new Promise((resolve, reject) => {
     axios.get(url, {
-      params: parmas,
+      params: params,
     })
       .then(res => {
         resolve(res);
