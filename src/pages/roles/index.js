@@ -10,28 +10,28 @@ class Index extends Component {
 
   columns = [{
     title: '角色名称',
-    dataIndex: 'role',
-    key: 'role',
-  }, {
-    title: '角色别名',
     dataIndex: 'roleName',
     key: 'roleName',
   }, {
-    title: '创建时间',
-    dataIndex: 'date',
-    key: 'date',
-    render:val => <span>{moment(val).format(dateFormat)}</span>,
+    title: '角色描述',
+    dataIndex: 'roleDescr',
+    key: 'roleDescr',
+  // }, {
+  //   title: '创建时间',
+  //   dataIndex: 'date',
+  //   key: 'date',
+  //   render:val => <span>{moment(val).format(dateFormat)}</span>,
   }, {
     title: '操作',
     key: 'action',
     render: (text, record) => (
       <span>
-        <RoleModal record={record} onOk={this.editRole.bind(null, record.key)} title='编辑角色'>
+        <RoleModal record={record} onOk={this.editRole.bind(null, record.guid)} title='编辑角色'>
             <a>编辑</a>
         </RoleModal>
       <Divider type="vertical"/>
                 <Popconfirm title={'确认删除'}
-                            onConfirm={() => this.deleteRole(record.key)}>
+                            onConfirm={() => this.deleteRole(record.guid)}>
             <a>删除</a>
           </Popconfirm>
     </span>
@@ -52,17 +52,17 @@ class Index extends Component {
     });
   };
 
-  editRole = (key,values) => {
+  editRole = (guid,values) => {
     this.props.dispatch({
       type: 'roles/editRole',
-      payload: {key,values},
+      payload: {guid,...values},
     });
   };
 
-  deleteRole = (key) => {
+  deleteRole = (guid) => {
     this.props.dispatch({
       type: 'roles/deleteRole',
-      payload: {key:key},
+      payload: {guid:guid},
     });
   };
 

@@ -52,10 +52,10 @@ class Index extends Component {
     });
   };
 
-  editUser = (key,values) => {
+  editUser = (guid,values) => {
     this.props.dispatch({
       type: 'users/editUser',
-      payload: {key,values},
+      payload: {guid,...values},
     });
   };
 

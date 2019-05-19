@@ -1,5 +1,6 @@
-import { Component } from 'react';
-import { Modal, Form, Input } from 'antd';
+import React, { Component } from 'react';
+import { Modal, Form, Input,TreeSelect  } from 'antd';
+import {connect} from "dva/index";
 
 const FormItem = Form.Item;
 
@@ -9,8 +10,15 @@ class MenuModal extends Component {
     super(props);
     this.state = {
       visible: false,
-      destroy:false
+      destroy:false,
     };
+  }
+
+  componentDidMount() {
+    // console.log('测试111111');
+    // this.props.dispatch({
+    //   type: 'menus/queryMenuSelectTree',
+    // });
   }
 
   showModalHandler = (e) => {
@@ -38,9 +46,9 @@ class MenuModal extends Component {
   };
 
   render() {
-    const { children,title } = this.props;
+    const { children,title,menuSelectTree } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { menuName, menuCode, route} = this.props.record;
+    const { menuName, menuCode, route,icon} = this.props.record;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
@@ -80,14 +88,43 @@ class MenuModal extends Component {
               })(
                 <Input />
               )}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="上级菜单"
+              >
+              {getFieldDecorator('parentId',{
+                rules: [{ required: true }],
+                initialValue: menuName,
+              })(
+                <TreeSelect
+                  // style={{ width: 300 }}
+                  //value={this.state.value}
+                  dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                  treeData={menuSelectTree}
+                  placeholder="Please select"
+                  treeDefaultExpandAll
+                  // onChange={this.onChange}
+                />
+              )}
             </FormItem>
             <FormItem
               {...formItemLayout}
               label="路由"
             >
               {getFieldDecorator('route',{
-                rules: [{ required: true }],
                 initialValue: route,
+              })(
+                <Input />
+              )}
+            </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="图标"
+              >
+              {getFieldDecorator('icon',{
+                // rules: [{ required: true }],
+                initialValue: icon,
               })(
                 <Input />
               )}
@@ -99,4 +136,11 @@ class MenuModal extends Component {
   }
 }
 
-export default Form.create()(MenuModal);
+function mapStateToProps(state) {
+  return {
+    menuSelectTree: state.menus.menuSelectTree,
+    menusLoading: state.loading.effects['menus/queryMenuSelectTree'],
+  };
+}
+
+export default connect(mapStateToProps) (Form.create()(MenuModal));

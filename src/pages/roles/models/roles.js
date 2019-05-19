@@ -18,7 +18,7 @@ export default {
     *queryRole({ _ }, { call, put }) {
       const response = yield call(rolesService.queryRole);
       console.log(response);
-      yield put({ type: 'saveList', payload: { rolesList: response } });
+      yield put({ type: 'saveList', payload: { rolesList: response.data.records } });
     },
     *deleteRole({ payload }, { call, put }) {
       const response = yield call(rolesService.deleteRole, payload);

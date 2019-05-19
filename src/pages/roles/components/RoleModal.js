@@ -41,7 +41,7 @@ class RoleModal extends Component {
   render() {
     const { children,title } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { role, roleName, date} = this.props.record;
+    const { roleName,roleDescr,date} = this.props.record;
     console.log(date);
     const dateFormat = 'YYYY-MM-DD';
     const formItemLayout = {
@@ -66,18 +66,7 @@ class RoleModal extends Component {
               {...formItemLayout}
               label="角色名称"
             >
-              {getFieldDecorator('role', {
-                rules: [{ required: true }],
-                initialValue: role,
-              })(
-                <Input />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="角色别名"
-            >
-              {getFieldDecorator('roleName',{
+              {getFieldDecorator('roleName', {
                 rules: [{ required: true }],
                 initialValue: roleName,
               })(
@@ -86,15 +75,26 @@ class RoleModal extends Component {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="创建时间"
+              label="角色别名"
             >
-              {getFieldDecorator('date',{
-                initialValue: typeof(date)==='undefined'?null:moment(date, dateFormat),
-              })
-              (
-                <DatePicker format={dateFormat} />
+              {getFieldDecorator('roleDescr',{
+                rules: [{ required: true }],
+                initialValue: roleDescr,
+              })(
+                <Input />
               )}
             </FormItem>
+            {/*<FormItem*/}
+              {/*{...formItemLayout}*/}
+              {/*label="创建时间"*/}
+            {/*>*/}
+              {/*{getFieldDecorator('date',{*/}
+                {/*initialValue: typeof(date)==='undefined'?null:moment(date, dateFormat),*/}
+              {/*})*/}
+              {/*(*/}
+                {/*<DatePicker format={dateFormat} />*/}
+              {/*)}*/}
+            {/*</FormItem>*/}
           </Form>
         </Modal>
       </span>
