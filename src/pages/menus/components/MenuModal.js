@@ -94,7 +94,7 @@ class MenuModal extends Component {
                 label="上级菜单"
               >
               {getFieldDecorator('parentId',{
-                rules: [{ required: true }],
+                // rules: [{ required: true }],
                 initialValue: menuName,
               })(
                 <TreeSelect

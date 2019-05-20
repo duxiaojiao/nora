@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import { Table, Divider,Button, Form,Popconfirm } from 'antd';
 import { connect } from 'dva';
 import RoleModal from './components/RoleModal';
+import SelectMenu from './components/SelectMenu';
 import styles from './index.less';
 import moment from 'moment';
 
 const dateFormat = 'YYYY-MM-DD';
 class Index extends Component {
 
-  columns = [{
+  columns = [
+    {
+      title: '角色编码',
+      dataIndex: 'roleCode',
+      key: 'roleCode',
+    },
+    {
     title: '角色名称',
     dataIndex: 'roleName',
     key: 'roleName',
@@ -34,6 +41,11 @@ class Index extends Component {
                             onConfirm={() => this.deleteRole(record.guid)}>
             <a>删除</a>
           </Popconfirm>
+      <Divider type="vertical"/>
+        {/*<a onClick={() => this.showMenuTree(record)}>分配菜单</a>*/}
+        <SelectMenu record={record} onOk={this.showMenuTree.bind(null, record.guid)} treeData={this.props.menuTree} title='分配菜单'>
+            <a>分配菜单</a>
+        </SelectMenu>
     </span>
     ),
   }];
@@ -42,6 +54,9 @@ class Index extends Component {
   componentDidMount() {
     this.props.dispatch({
       type: 'roles/queryRole',
+    });
+    this.props.dispatch({
+      type: 'roles/queryRoleSelectMenuTree',
     });
   }
 
@@ -66,8 +81,16 @@ class Index extends Component {
     });
   };
 
+  showMenuTree = (record) => {
+    this.props.dispatch({
+      type: 'roles/showMenuTree',
+      payload: {record: record},
+    });
+
+  };
+
   render(){
-    const { rolesList, rolesLoading} = this.props;
+    const { rolesList, rolesLoading,menuTree,menuTreeVisible} = this.props;
     console.log(this.props);
 
     return(
@@ -78,6 +101,15 @@ class Index extends Component {
           </RoleModal>
         </div>
         <Table columns={this.columns} dataSource={rolesList} loading={rolesLoading} />
+        {/*<SelectMenu*/}
+          {/*treeData={menuTree}*/}
+          {/*// checkedKeys={checkedKeys}*/}
+          {/*// loading={loading}*/}
+          {/*// onCheck={this.onChangeSelectKeys}*/}
+          {/*modalVisible={menuTreeVisible}*/}
+          {/*// handleSubmit={this.handleSubmitRoleMenu}*/}
+          {/*// handleCloseModal={(p) => this.closeModal('authMenu')}*/}
+        {/*/>*/}
       </div>
     )
   }
@@ -87,6 +119,8 @@ function mapStateToProps(state) {
   console.log(state);
   return {
     rolesList: state.roles.rolesList,
+    menuTree:state.roles.menuTree,
+    menuTreeVisible:state.roles.menuTreeVisible,
     rolesLoading: state.loading.effects['roles/queryRole'],
   };
 }

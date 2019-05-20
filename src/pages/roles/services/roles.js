@@ -4,6 +4,10 @@ export function queryRole() {
   return request.get(`/system/sysRole/queryRole`);
 }
 
+export function queryRoleSelectMenuTree() {
+  return request.get(`/system/sysRole/queryRoleSelectMenuTree`);
+}
+
 export function deleteRole(data) {
   return request.post(`/system/sysRole/deleteRole`,data);
 }

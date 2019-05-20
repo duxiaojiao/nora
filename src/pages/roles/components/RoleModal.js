@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React,{ Component } from 'react';
 import { Modal, Form, Input,DatePicker } from 'antd';
 import moment from 'moment';
 
@@ -41,7 +41,7 @@ class RoleModal extends Component {
   render() {
     const { children,title } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { roleName,roleDescr,date} = this.props.record;
+    const { roleCode,roleName,roleDescr,date} = this.props.record;
     console.log(date);
     const dateFormat = 'YYYY-MM-DD';
     const formItemLayout = {
@@ -62,6 +62,17 @@ class RoleModal extends Component {
           onCancel={this.hideModelHandler}
         >
           <Form  onSubmit={this.okHandler}>
+            <FormItem
+              {...formItemLayout}
+              label="角色编码"
+            >
+              {getFieldDecorator('roleCode', {
+                rules: [{required: true}],
+                initialValue: roleCode,
+              })(
+                <Input/>
+              )}
+            </FormItem>
             <FormItem
               {...formItemLayout}
               label="角色名称"
