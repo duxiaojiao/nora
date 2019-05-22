@@ -23,3 +23,7 @@ export function editRole(data) {
 export function assignMenuTree(data) {
   return request.post(`/system/sysRole/saveRoleMenu`,data);
 }
+
+export function queryRoleMenu(data) {
+  return request.get(`/system/sysRole/queryRoleMenu`,data);
+}

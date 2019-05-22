@@ -1,5 +1,6 @@
 import React,{ Component }  from 'react';
 import {Form, Modal, Tree} from 'antd';
+import { connect } from 'dva';
 
 class SelectMenu extends Component {
 
@@ -16,6 +17,11 @@ class SelectMenu extends Component {
     if (e) e.stopPropagation();
     this.setState({
       visible: true,
+    });
+    const { guid} = this.props.record;
+    this.props.dispatch({
+      type: 'roles/queryRoleMenu',
+      payload: {roleId:guid},
     });
   };
 
@@ -48,7 +54,7 @@ class SelectMenu extends Component {
   };
 
   render() {
-    const { children,title } = this.props;
+    const { children,title,checkedKeys,menusLoading } = this.props;
     return (
       <span>
         <span onClick={this.showModalHandler}>
@@ -60,10 +66,12 @@ class SelectMenu extends Component {
         destroyOnClose={this.state.destroy}
         onOk={this.okHandler}
         onCancel={this.hideModelHandler}
+        loading={menusLoading}
       >
         <Tree
           treeData={this.props.treeData}
           checkable={true}
+          defaultCheckedKeys={checkedKeys}
           style={{width: 300}}
           onSelect={this.onSelect}
           onCheck={this.onCheck}
@@ -76,4 +84,11 @@ class SelectMenu extends Component {
 
 }
 
-export default SelectMenu;
+function mapStateToProps(state) {
+  return {
+    checkedKeys:state.roles.checkedKeys,
+    menusLoading: state.loading.effects['roles/queryRoleMenu'],
+  };
+}
+
+export default connect(mapStateToProps) (SelectMenu);
