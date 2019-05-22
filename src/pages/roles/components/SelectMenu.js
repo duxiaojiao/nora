@@ -1,5 +1,5 @@
 import React,{ Component }  from 'react';
-import {Form, Modal, TreeSelect} from 'antd';
+import {Form, Modal, Tree} from 'antd';
 
 class SelectMenu extends Component {
 
@@ -7,7 +7,8 @@ class SelectMenu extends Component {
     super(props);
     this.state = {
       visible: false,
-      destroy: false
+      destroy: false,
+      checkedKeys:[],
     };
   }
 
@@ -29,10 +30,21 @@ class SelectMenu extends Component {
     const {onOk} = this.props;
     // this.props.form.validateFields((err, values) => {
     //   if (!err) {
-    //     onOk(values);
+        onOk(this.state.checkedKeys);
         this.hideModelHandler();
     //   }
     // });
+  };
+
+  onSelect = (selectedKeys, info) => {
+    console.log('selected', selectedKeys, info);
+  };
+
+  onCheck = (checkedKeys, info) => {
+    console.log('onCheck', checkedKeys, info);
+    this.setState(
+      {checkedKeys}
+    )
   };
 
   render() {
@@ -40,25 +52,24 @@ class SelectMenu extends Component {
     return (
       <span>
         <span onClick={this.showModalHandler}>
-          { children }
+          {children}
         </span>
       <Modal
         title={title}
         visible={this.state.visible}
-        //visible={this.props.modalVisible&&this.state.visible}
         destroyOnClose={this.state.destroy}
         onOk={this.okHandler}
         onCancel={this.hideModelHandler}
       >
-        <TreeSelect
+        <Tree
           treeData={this.props.treeData}
-          treeCheckable={true}
-          style={{width:300}}
-          searchPlaceholder='Please select'
-          showCheckedStrategy='SHOW_PARENT'
+          checkable={true}
+          style={{width: 300}}
+          onSelect={this.onSelect}
+          onCheck={this.onCheck}
         />
       </Modal>
-              </span>
+      </span>
     )
 
 }

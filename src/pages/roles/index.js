@@ -42,8 +42,7 @@ class Index extends Component {
             <a>删除</a>
           </Popconfirm>
       <Divider type="vertical"/>
-        {/*<a onClick={() => this.showMenuTree(record)}>分配菜单</a>*/}
-        <SelectMenu record={record} onOk={this.showMenuTree.bind(null, record.guid)} treeData={this.props.menuTree} title='分配菜单'>
+        <SelectMenu record={record} onOk={this.assignMenuTree.bind(null, record.guid)} treeData={this.props.menuTree} title='分配菜单'>
             <a>分配菜单</a>
         </SelectMenu>
     </span>
@@ -81,10 +80,10 @@ class Index extends Component {
     });
   };
 
-  showMenuTree = (record) => {
+  assignMenuTree = (guid,values) => {
     this.props.dispatch({
-      type: 'roles/showMenuTree',
-      payload: {record: record},
+      type: 'roles/assignMenuTree',
+      payload: {roleId:guid, menuIds:values},
     });
 
   };
@@ -101,15 +100,6 @@ class Index extends Component {
           </RoleModal>
         </div>
         <Table columns={this.columns} dataSource={rolesList} loading={rolesLoading} />
-        {/*<SelectMenu*/}
-          {/*treeData={menuTree}*/}
-          {/*// checkedKeys={checkedKeys}*/}
-          {/*// loading={loading}*/}
-          {/*// onCheck={this.onChangeSelectKeys}*/}
-          {/*modalVisible={menuTreeVisible}*/}
-          {/*// handleSubmit={this.handleSubmitRoleMenu}*/}
-          {/*// handleCloseModal={(p) => this.closeModal('authMenu')}*/}
-        {/*/>*/}
       </div>
     )
   }

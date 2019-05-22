@@ -5,8 +5,6 @@ export default {
   state: {
     rolesList: [],
     menuTree:[],
-    total: null,
-    menuTreeVisible:false,
   },
   reducers: {
     saveList(state, { payload: { rolesList } }) {
@@ -19,12 +17,6 @@ export default {
       return {
         ...state,
         menuTree,
-      }
-    },
-    showModal(state, { payload: { menuTreeVisible } }) {
-      return {
-        ...state,
-        menuTreeVisible,
       }
     },
   },
@@ -54,13 +46,12 @@ export default {
     *editRole({ payload}, { call, put}) {
       const response = yield call(rolesService.editRole, payload);
       yield put({ type: 'queryRole' });
-      console.log(response);
       return response;
     },
-    *showMenuTree({ payload}, { call, put}) {
-      // const response = yield call(rolesService.editRole, payload);
-      // return response;
-      yield put({ type: 'showModal', payload: { menuTreeVisible:true }});
+    *assignMenuTree({ payload}, { call, put}) {
+      const response = yield call(rolesService.assignMenuTree, payload);
+      return response;
+     // yield put({ type: 'showModal', payload: { menuTreeVisible:true }});
 
     },
   }

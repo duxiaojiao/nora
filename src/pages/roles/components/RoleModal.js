@@ -42,7 +42,6 @@ class RoleModal extends Component {
     const { children,title } = this.props;
     const { getFieldDecorator } = this.props.form;
     const { roleCode,roleName,roleDescr,date} = this.props.record;
-    console.log(date);
     const dateFormat = 'YYYY-MM-DD';
     const formItemLayout = {
       labelCol: { span: 6 },
