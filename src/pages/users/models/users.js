@@ -4,6 +4,7 @@ export default {
   namespace: 'users',
   state: {
     usersList: [],
+    userDetail:'',
     total: null,
   },
   reducers: {
@@ -12,6 +13,12 @@ export default {
         ...state,
         usersList,
       }
+    },
+    saveUserDetail(state, { payload: { userDetail } }) {
+      return {
+        ...state,
+        userDetail,
+      }
     }
   },
   effects: {
@@ -19,6 +26,10 @@ export default {
       const response = yield call(usersService.queryList);
       console.log(response);
       yield put({ type: 'saveList', payload: { usersList: response.data.records } });
+    },
+    *queryUserById({ payload }, { call, put }) {
+      const response = yield call(usersService.queryUserById,payload);
+      yield put({ type: 'saveUserDetail', payload: { userDetail: response.data } });
     },
     *deleteUser({ payload }, { call, put }) {
       const response = yield call(usersService.deleteUser, payload);

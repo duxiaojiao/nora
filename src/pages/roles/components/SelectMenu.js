@@ -1,6 +1,6 @@
 import React,{ Component }  from 'react';
-import {Form, Modal, Tree} from 'antd';
-import { connect } from 'dva';
+import {Modal, Tree} from 'antd';
+import * as rolesService from '../services/roles';
 
 class SelectMenu extends Component {
 
@@ -15,31 +15,34 @@ class SelectMenu extends Component {
 
   showModalHandler = (e) => {
     if (e) e.stopPropagation();
-    this.setState({
-      visible: true,
-    });
     const { guid} = this.props.record;
-    this.props.dispatch({
-      type: 'roles/queryRoleMenu',
-      payload: {roleId:guid},
-    });
+    const data={
+      roleId:guid,
+    };
+   rolesService.queryRoleMenu(data).then(
+     res=>{
+       this.setState({
+         visible: true,
+         checkedKeys: res.data,
+       });
+     }
+   );
+
+
   };
 
   hideModelHandler = () => {
     this.setState({
       visible: false,
-      destroy: true
+      destroy: true,
+      checkedKeys:[],
     });
   };
 
   okHandler = () => {
     const {onOk} = this.props;
-    // this.props.form.validateFields((err, values) => {
-    //   if (!err) {
-        onOk(this.state.checkedKeys);
-        this.hideModelHandler();
-    //   }
-    // });
+    onOk(this.state.checkedKeys);
+    this.hideModelHandler();
   };
 
   onSelect = (selectedKeys, info) => {
@@ -54,7 +57,7 @@ class SelectMenu extends Component {
   };
 
   render() {
-    const { children,title,checkedKeys,menusLoading } = this.props;
+    const { children,title,menusLoading } = this.props;
     return (
       <span>
         <span onClick={this.showModalHandler}>
@@ -71,7 +74,9 @@ class SelectMenu extends Component {
         <Tree
           treeData={this.props.treeData}
           checkable={true}
-          defaultCheckedKeys={checkedKeys}
+          defaultExpandedKeys={this.state.checkedKeys}
+          defaultSelectedKeys={this.state.checkedKeys}
+          defaultCheckedKeys={this.state.checkedKeys}
           style={{width: 300}}
           onSelect={this.onSelect}
           onCheck={this.onCheck}
@@ -84,11 +89,4 @@ class SelectMenu extends Component {
 
 }
 
-function mapStateToProps(state) {
-  return {
-    checkedKeys:state.roles.checkedKeys,
-    menusLoading: state.loading.effects['roles/queryRoleMenu'],
-  };
-}
-
-export default connect(mapStateToProps) (SelectMenu);
+export default SelectMenu;

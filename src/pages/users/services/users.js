@@ -16,3 +16,7 @@ export function addUser(data) {
 export function editUser(data) {
   return request.post(`/system/sysUser/editUser`,data);
 }
+
+export function queryUserById(data) {
+  return request.get(`/system/sysUser/queryUserById`,data);
+}

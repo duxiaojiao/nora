@@ -1,5 +1,6 @@
 import { Component } from 'react';
-import { Modal, Form, Input } from 'antd';
+import { Modal, Form, Input,TreeSelect } from 'antd';
+import { connect } from 'dva';
 
 const FormItem = Form.Item;
 
@@ -9,12 +10,23 @@ class UserModal extends Component {
     super(props);
     this.state = {
       visible: false,
-      destroy:false
+      destroy:false,
+      value: [],
     };
   }
 
   showModalHandler = (e) => {
     if (e) e.stopPropagation();
+    this.props.dispatch({
+      type: 'roles/queryRole',
+    });
+    const {guid} = this.props.record;
+    if (guid !== undefined) {
+      this.props.dispatch({
+        type: 'users/queryUserById',
+        payload: {guid: guid},
+      });
+    }
     this.setState({
       visible: true,
     });
@@ -37,10 +49,16 @@ class UserModal extends Component {
     });
   };
 
+  onChange = value => {
+    console.log('onChange ', value);
+    this.setState({ value });
+  };
+
   render() {
-    const { children,title } = this.props;
+    const { children,title,rolesList,userDetail } = this.props;
+    const treeData = rolesList.map(data => ({title: data.roleName, value: data.guid, key: data.guid}));
     const { getFieldDecorator } = this.props.form;
-    const { empCode, empName, phone,email } = this.props.record;
+    const { empCode, empName, phone,email,guid} = this.props.record;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
@@ -103,6 +121,24 @@ class UserModal extends Component {
                 <Input />
               )}
             </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="角色"
+            >
+              {getFieldDecorator('roleIds',{
+                initialValue:guid !== undefined?userDetail.roleIds:null,
+              })
+              (
+                <TreeSelect
+                  searchPlaceholder='Please select'
+                  showCheckedStrategy='SHOW_PARENT'
+                  // value={this.state.value}
+                  // onChange={this.onChange}
+                  treeCheckable={true}
+                  treeData={treeData}
+                />
+              )}
+            </FormItem>
           </Form>
         </Modal>
       </span>
@@ -110,4 +146,13 @@ class UserModal extends Component {
   }
 }
 
-export default Form.create()(UserModal);
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    rolesList: state.roles.rolesList,
+    rolesLoading: state.loading.effects['roles/queryRole'],
+    userDetail:state.users.userDetail,
+  };
+}
+
+export default connect(mapStateToProps) (Form.create()(UserModal));
