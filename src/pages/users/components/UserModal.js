@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Modal, Form, Input,TreeSelect } from 'antd';
 import { connect } from 'dva';
+import * as rolesService from "@/pages/roles/services/roles";
 
 const FormItem = Form.Item;
 
@@ -12,21 +13,30 @@ class UserModal extends Component {
       visible: false,
       destroy:false,
       value: [],
+      rolesList:[],
     };
   }
 
   showModalHandler = (e) => {
     if (e) e.stopPropagation();
-    this.props.dispatch({
-      type: 'roles/queryRole',
-    });
+    // this.props.dispatch({
+    //   type: 'roles/queryRole',
+    // });
+    rolesService.queryRole().then(
+      res=>{
+        this.setState({
+          rolesList: res.data.records,
+        });
+      }
+    )
     const {guid} = this.props.record;
     if (guid !== undefined) {
       this.props.dispatch({
         type: 'users/queryUserById',
         payload: {guid: guid},
       });
-    }
+    };
+
     this.setState({
       visible: true,
     });
@@ -35,7 +45,8 @@ class UserModal extends Component {
   hideModelHandler = () => {
     this.setState({
       visible: false,
-      destroy:true
+      destroy:true,
+      rolesList:[],
     });
   };
 
@@ -55,7 +66,8 @@ class UserModal extends Component {
   };
 
   render() {
-    const { children,title,rolesList,userDetail } = this.props;
+    const { children,title,userDetail } = this.props;
+    const {rolesList}=this.state;
     const treeData = rolesList.map(data => ({title: data.roleName, value: data.guid, key: data.guid}));
     const { getFieldDecorator } = this.props.form;
     const { empCode, empName, phone,email,guid} = this.props.record;
@@ -147,10 +159,10 @@ class UserModal extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
+  console.log('测试',state);
   return {
-    rolesList: state.roles.rolesList,
-    rolesLoading: state.loading.effects['roles/queryRole'],
+    // rolesList: state.roles.rolesList,
+    // rolesLoading: state.loading.effects['roles/queryRole'],
     userDetail:state.users.userDetail,
   };
 }

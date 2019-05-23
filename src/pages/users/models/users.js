@@ -5,7 +5,7 @@ export default {
   state: {
     usersList: [],
     userDetail:'',
-    total: null,
+    rolesList:[],
   },
   reducers: {
     saveList(state, { payload: { usersList } }) {
@@ -50,13 +50,13 @@ export default {
       return response;
     },
   },
-  subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({ pathname, query }) => {
-        if (pathname === '/users') {
-          dispatch({ type: 'fetch', payload: query });
-        }
-      });
-    },
-  },
+  // subscriptions: {
+  //   setup({ dispatch, history }) {
+  //     return history.listen(({ pathname, query }) => {
+  //       if (pathname === '/users') {
+  //         dispatch({ type: 'fetch', payload: query });
+  //       }
+  //     });
+  //   },
+  // },
 };
