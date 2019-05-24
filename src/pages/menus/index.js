@@ -18,8 +18,8 @@ class Index extends Component {
     key: 'menuCode',
   }, {
     title: '路由',
-    dataIndex: 'route',
-    key: 'route',
+    dataIndex: 'router',
+    key: 'router',
    }, {
      title: '图标',
      dataIndex: 'icon',

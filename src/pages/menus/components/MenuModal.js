@@ -48,7 +48,7 @@ class MenuModal extends Component {
   render() {
     const { children,title,menuSelectTree } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { menuName, menuCode, route,icon} = this.props.record;
+    const { menuName, menuCode, router,icon,parentId} = this.props.record;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
@@ -95,7 +95,7 @@ class MenuModal extends Component {
               >
               {getFieldDecorator('parentId',{
                 // rules: [{ required: true }],
-                initialValue: menuName,
+                initialValue: parentId,
               })(
                 <TreeSelect
                   // style={{ width: 300 }}
@@ -112,8 +112,8 @@ class MenuModal extends Component {
               {...formItemLayout}
               label="路由"
             >
-              {getFieldDecorator('route',{
-                initialValue: route,
+              {getFieldDecorator('router',{
+                initialValue: router,
               })(
                 <Input />
               )}

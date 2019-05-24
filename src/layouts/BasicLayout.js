@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Layout, Icon, Dropdown, Avatar, Menu, Spin } from 'antd';
 import { connect } from 'dva';
 import SideBar from './side';
