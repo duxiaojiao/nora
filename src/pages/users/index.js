@@ -68,7 +68,6 @@ class Index extends Component {
 
   render(){
     const { usersList, usersLoading} = this.props;
-    console.log(this.props);
 
     return(
       <div>
@@ -77,7 +76,7 @@ class Index extends Component {
             <Button type="primary">新增</Button>
           </UserModal>
         </div>
-        <Table columns={this.columns} dataSource={usersList} loading={usersLoading} />
+        <Table columns={this.columns} dataSource={usersList} loading={usersLoading} rowKey='guid'/>
       </div>
     )
   }

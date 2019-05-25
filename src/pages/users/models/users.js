@@ -24,7 +24,6 @@ export default {
   effects: {
     *queryList({ _ }, { call, put }) {
       const response = yield call(usersService.queryList);
-      console.log(response);
       yield put({ type: 'saveList', payload: { usersList: response.data.records } });
     },
     *queryUserById({ payload }, { call, put }) {
@@ -33,20 +32,17 @@ export default {
     },
     *deleteUser({ payload }, { call, put }) {
       const response = yield call(usersService.deleteUser, payload);
-      yield put({ type: 'queryList' });
-      console.log(response);
+      yield put({ type: 'queryList' });;
       return response;
     },
     *addUser({ payload }, { call, put }) {
       const response = yield call(usersService.addUser, payload);
       yield put({ type: 'queryList' });
-      console.log(response);
       return response;
     },
     *editUser({ payload}, { call, put}) {
       const response = yield call(usersService.editUser, payload);
       yield put({ type: 'queryList' });
-      console.log(response);
       return response;
     },
   },

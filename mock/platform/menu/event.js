@@ -40,9 +40,7 @@ export default {
   },
 
   'post /platform/menu/delete': function (req, res) {
-    console.log(req.body.key);
     data = data.filter(v => v.key !== parseInt(req.body.key));
-    console.log(data);
     setTimeout(() => {
       res.json({
         success: true,
@@ -51,7 +49,6 @@ export default {
   },
 
   'post /platform/menu/add': function (req, res) {
-    console.log(req.body);
     data = [...data, {
       ...req.body,
       key: data[data.length - 1].key + 1,
@@ -65,7 +62,6 @@ export default {
   'post /platform/menu/edit': function (req, res) {
     const { key, values} = req.body;
     data=data.map(item =>(item.key===key?{key,...values}:item));
-    console.log(data);
     res.json({
       success: true,
     });

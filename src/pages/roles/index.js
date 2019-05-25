@@ -90,7 +90,6 @@ class Index extends Component {
 
   render(){
     const { rolesList, rolesLoading,menuTree,menuTreeVisible} = this.props;
-    console.log(this.props);
 
     return(
       <div>
@@ -99,14 +98,13 @@ class Index extends Component {
             <Button type="primary">新增</Button>
           </RoleModal>
         </div>
-        <Table columns={this.columns} dataSource={rolesList} loading={rolesLoading} />
+        <Table columns={this.columns} dataSource={rolesList} loading={rolesLoading} rowKey='guid' />
       </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     rolesList: state.roles.rolesList,
     menuTree:state.roles.menuTree,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Menu, Icon, Spin } from 'antd';
 import Link from 'umi/link';
+import { connect } from 'dva';
 import { getMenu } from '../common/menu';
 
 const SubMenu = Menu.SubMenu;
@@ -26,6 +27,10 @@ class Side extends Component {
     getMenu((res) => {
       this.setState({ menu: res, loading: false });
     });
+
+    this.props.dispatch({
+      type: 'menu/queryMenuTree',
+    });
   }
 
   componentWillUnmount() {
@@ -35,11 +40,11 @@ class Side extends Component {
   }
 
   render() {
-    const { openKeys, selectedKeys } = this.props;
+    const { openKeys, selectedKeys,menusList,menusLoading } = this.props;
     const { menu, loading } = this.state;
     sessionStorage.setItem('selectedKeys', selectedKeys);
     return (
-      <Spin spinning={loading} tip='菜 单 加 载 中 ...'>
+      <Spin spinning={menusLoading} tip='菜 单 加 载 中 ...'>
         <Menu
           onClick={this.onSelect}
           onOpenChange={this.onOpenChange}
@@ -50,7 +55,7 @@ class Side extends Component {
           style={{ minHeight: 400 }}
         >
           {
-            menu && menu.map((item) => (
+            menusList && menusList.map((item) => (
               item.children ?
                 SubMenuItem(item)
                 :
@@ -63,26 +68,55 @@ class Side extends Component {
   }
 }
 
+// const MenuItem = (data) => {
+//   return (
+//     <Menu.Item key={data.path}>
+//       <Link to={data.path}>
+//         <Icon type={data.icon}/>
+//         <span>{data.name}</span>
+//       </Link>
+//     </Menu.Item>
+//   );
+// };
+// const SubMenuItem = (data) => {
+//   return (
+//     <SubMenu key={data.name} title={<span><Icon type={data.icon}/><span>{data.name}</span></span>}>
+//       {
+//         data.children && data.children.map(item => (
+//           <Menu.Item key={item.path}><Link to={item.path}><Icon type={item.icon} />{item.name}</Link></Menu.Item>
+//         ))
+//       }
+//     </SubMenu>
+//   );
+// };
+
 const MenuItem = (data) => {
   return (
-    <Menu.Item key={data.path}>
-      <Link to={data.path}>
-        <Icon type={data.icon}/>
-        <span>{data.name}</span>
+    <Menu.Item key={data.key}>
+      <Link to={data.router}>
+        {data.icon!==''&&(<Icon type={data.icon}/>)}
+        <span>{data.menuName}</span>
       </Link>
     </Menu.Item>
   );
 };
 const SubMenuItem = (data) => {
   return (
-    <SubMenu key={data.name} title={<span><Icon type={data.icon}/><span>{data.name}</span></span>}>
+    <SubMenu key={data.menuName} title={<span> {data.icon!==''&&(<Icon type={data.icon}/>)}<span>{data.menuName}</span></span>}>
       {
         data.children && data.children.map(item => (
-          <Menu.Item key={item.path}><Link to={item.path}><Icon type={item.icon} />{item.name}</Link></Menu.Item>
+          <Menu.Item key={item.router}><Link to={item.router}><Icon type={item.icon} />{item.menuName}</Link></Menu.Item>
         ))
       }
     </SubMenu>
   );
 };
 
-export default Side;
+function mapStateToProps(state) {
+  return {
+    menusList: state.menu.menusList,
+    menusLoading: state.loading.effects['menu/queryMenuTree'],
+  };
+}
+
+export default connect(mapStateToProps) (Side);

@@ -75,7 +75,6 @@ class Index extends Component {
 
   render(){
     const { menusList, menusLoading} = this.props;
-    console.log(this.props);
 
     return(
       <div>
@@ -84,7 +83,7 @@ class Index extends Component {
             <Button type="primary">新增</Button>
           </MenuModal>
         </div>
-        <Table columns={this.columns} dataSource={menusList} loading={menusLoading} />
+        <Table columns={this.columns} dataSource={menusList} loading={menusLoading} rowKey='guid' />
       </div>
     )
   }

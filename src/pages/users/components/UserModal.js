@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React,{ Component } from 'react';
 import { Modal, Form, Input,TreeSelect } from 'antd';
 import { connect } from 'dva';
 import * as rolesService from "@/pages/roles/services/roles";
@@ -159,7 +159,6 @@ class UserModal extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('测试',state);
   return {
     // rolesList: state.roles.rolesList,
     // rolesLoading: state.loading.effects['roles/queryRole'],
