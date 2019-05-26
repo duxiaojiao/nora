@@ -28,8 +28,11 @@ class Side extends Component {
     //   this.setState({ menu: res, loading: false });
     // });
 
+    // this.props.dispatch({
+    //   type: 'menu/queryMenuTree',
+    // });
     this.props.dispatch({
-      type: 'menu/queryMenuTree',
+      type: 'menu/queryUserMenuTree',
     });
   }
 
@@ -115,7 +118,7 @@ const SubMenuItem = (data) => {
 function mapStateToProps(state) {
   return {
     menusList: state.menu.menusList,
-    menusLoading: state.loading.effects['menu/queryMenuTree'],
+    menusLoading: state.loading.effects['menu/queryUserMenuTree'],
   };
 }
 

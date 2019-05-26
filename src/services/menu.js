@@ -6,7 +6,7 @@ import request from '../utils/request';
  * @returns {Promise<Object>}
  */
 export async function queryUserMenuTree(payload) {
-  return request(`/system/sysMenu/queryMenuTree`);
+  return request.get(`/system/account/queryUserMenuTree`);
 }
 
 /**
