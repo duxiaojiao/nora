@@ -24,9 +24,9 @@ class Side extends Component {
       this.onSelect({ key: sessionStorage.getItem('selectedKeys') });
       this.onOpenChange(['', sessionStorage.getItem('selectedKeys')[0]]);
     }
-    getMenu((res) => {
-      this.setState({ menu: res, loading: false });
-    });
+    // getMenu((res) => {
+    //   this.setState({ menu: res, loading: false });
+    // });
 
     this.props.dispatch({
       type: 'menu/queryMenuTree',

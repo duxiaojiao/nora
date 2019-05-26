@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import { Table, Divider,Button, Form,Popconfirm } from 'antd';
 import { connect } from 'dva';
 import UserModal from './components/UserModal';
+import ResetPwd from './components/ResetPwd';
 import styles from './index.less';
 
 class Index extends Component {
 
    columns = [{
-    title: '登陆账号',
-    dataIndex: 'empCode',
-    key: 'empCode',
-  }, {
     title: '用户名',
+    dataIndex: 'userName',
+    key: 'userName',
+  }, {
+    title: '员工姓名',
     dataIndex: 'empName',
     key: 'empName',
   }, {
@@ -35,6 +36,10 @@ class Index extends Component {
                             onConfirm={() => this.deleteUser(record.guid)}>
             <a>删除</a>
           </Popconfirm>
+      <Divider type="vertical"/>
+      <ResetPwd record={record} onOk={this.resetPwd.bind(null, record.guid)} title='重置密码'>
+          <a>密码设置</a>
+      </ResetPwd>
     </span>
     ),
   }];
@@ -63,6 +68,13 @@ class Index extends Component {
     this.props.dispatch({
       type: 'users/deleteUser',
       payload: {guid:guid},
+    });
+  };
+
+  resetPwd = (guid,values) => {
+    this.props.dispatch({
+      type: 'users/resetPwd',
+      payload: {guid:guid,...values},
     });
   };
 

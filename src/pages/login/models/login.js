@@ -4,22 +4,22 @@ import router from 'umi/router';
 import { isSuccess, platformToken } from '../../../common/globalConstant';
 
 export default {
-  namespace: 'loginToNamespace',
+  namespace: 'login',
   state: {},
   subscriptions: {},
   effects: {
-    * platformLogin({ payload }, { call }) {
-      if (localStorage.getItem(platformToken)) {
+    * login({ payload }, { call }) {
+      if (localStorage.getItem('token')) {
         router.push('/');
         return;
       }
       const response = yield call(login, payload);
-      if (response && response[isSuccess] === true) {
-        const token = response.result.token;
-        localStorage.setItem(platformToken, token);
+      if (response && response['code'] === '0') {
+        const token = response.data.token;
+        localStorage.setItem('token', token);
         router.push('/');
-      } else if (response && response[isSuccess] === false) {
-        message.error(response.error_info.msg);
+      } else if (response && response['code'] === '1') {
+        message.error(response.msg);
       }
     },
   },

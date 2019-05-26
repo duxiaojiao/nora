@@ -1,5 +1,5 @@
 import request from '../../../utils/request';
 
-export async function login(params) {
-  return request.post(request.api.platformLogin, params);
+export async function login(data) {
+  return request.post(`/system/account/login`, data);
 }

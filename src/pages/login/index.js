@@ -3,13 +3,12 @@ import { Button, Row, Form, Icon, Input } from 'antd'
 import { connect } from 'dva';
 import styles from './index.less'
 
-const modelPlatformLogin = 'loginToNamespace/platformLogin';
 const FormItem = Form.Item
 
 
-@connect(({ loginToNamespace, loading }) => ({
-  loginToNamespace,
-  submitLoading: loading.effects[modelPlatformLogin],
+@connect(({ login, loading }) => ({
+  login,
+  submitLoading: loading.effects[login],
 }))
 class Index extends Component {
 
@@ -20,7 +19,7 @@ class Index extends Component {
       if (errors) {
         return
       }
-      dispatch({type: modelPlatformLogin, payload: values,
+      dispatch({type: 'login/login', payload: values,
       })
     })
   }
@@ -37,7 +36,7 @@ class Index extends Component {
             <span>欢迎登录Nora项目</span>
           </div>
           <FormItem hasFeedback>
-            {getFieldDecorator('username', {
+            {getFieldDecorator('userName', {
               initialValue:'admin',
               rules: [
                 {

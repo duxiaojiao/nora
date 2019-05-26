@@ -34,10 +34,10 @@ axios.interceptors.request.use(config => {
     ...config,
     headers: {
       post: {
-        platform_token: localStorage.getItem(platformToken),
+        'token': localStorage.getItem('token'),
       },
       get: {
-        platform_token: localStorage.getItem(platformToken),
+        'token': localStorage.getItem('token'),
       },
     },
   };

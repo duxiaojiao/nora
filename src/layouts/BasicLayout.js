@@ -14,7 +14,7 @@ const UserMenu = (props) => {
     if (key === '3') {
       localStorage.clear();
       props.props.dispatch({
-        type: 'logoutToNamespace/platformLogout',
+        type: 'logout/logout',
       });
     }
   };

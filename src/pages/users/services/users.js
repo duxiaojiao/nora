@@ -20,3 +20,7 @@ export function editUser(data) {
 export function queryUserById(data) {
   return request.get(`/system/sysUser/queryUserById`,data);
 }
+
+export function resetPwd(data) {
+  return request.post(`/system/sysUser/resetPwd`,data);
+}

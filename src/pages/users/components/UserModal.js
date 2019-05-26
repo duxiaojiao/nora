@@ -70,7 +70,7 @@ class UserModal extends Component {
     const {rolesList}=this.state;
     const treeData = rolesList.map(data => ({title: data.roleName, value: data.guid, key: data.guid}));
     const { getFieldDecorator } = this.props.form;
-    const { empCode, empName, phone,email,guid} = this.props.record;
+    const { userName, empName, phone,email,guid} = this.props.record;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
@@ -91,11 +91,11 @@ class UserModal extends Component {
           <Form  onSubmit={this.okHandler}>
             <FormItem
               {...formItemLayout}
-              label="登陆账号"
+              label="用户名"
             >
-              {getFieldDecorator('empCode', {
+              {getFieldDecorator('userName', {
                 rules: [{ required: true }],
-                initialValue: empCode,
+                initialValue: userName,
               })(
                 <Input />
               )}

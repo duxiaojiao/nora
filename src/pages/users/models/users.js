@@ -45,6 +45,9 @@ export default {
       yield put({ type: 'queryList' });
       return response;
     },
+    *resetPwd({ payload}, { call}) {
+      return  yield call(usersService.resetPwd, payload);
+    },
   },
   // subscriptions: {
   //   setup({ dispatch, history }) {
