@@ -46,9 +46,13 @@ axios.interceptors.request.use(config => {
 
 // 返回拦截器
 axios.interceptors.response.use(config => {
-  if (config.data && config.data[isSuccess] === false && config.data.error_info.code === 401) {
-    router.push('/login');
-  }
+  // if (config.data && config.data[isSuccess] === false && config.data.error_info.code === 401) {
+  //   router.push('/login');
+  // }
+  // return config.data;
+  // if (config && config['code'] === '1') {
+  //   router.push('/login');
+  // }
   return config.data;
 }, (error) => {
   if (error && error.response) {

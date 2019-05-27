@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, Input,TreeSelect  } from 'antd';
+import { Modal, Form, Input,TreeSelect,InputNumber  } from 'antd';
 import {connect} from "dva/index";
 
 const FormItem = Form.Item;
@@ -48,7 +48,7 @@ class MenuModal extends Component {
   render() {
     const { children,title,menuSelectTree } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { menuName, menuCode, router,icon,parentId} = this.props.record;
+    const { menuName, menuCode, router,icon,parentId,sorter} = this.props.record;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
@@ -118,7 +118,7 @@ class MenuModal extends Component {
                 <Input />
               )}
             </FormItem>
-              <FormItem
+            <FormItem
                 {...formItemLayout}
                 label="图标"
               >
@@ -127,6 +127,16 @@ class MenuModal extends Component {
                 initialValue: icon,
               })(
                 <Input />
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="排序"
+            >
+              {getFieldDecorator('sorter',{
+                initialValue: sorter,
+              })(
+                <InputNumber min={0} style={{width: 280}}/>
               )}
             </FormItem>
           </Form>

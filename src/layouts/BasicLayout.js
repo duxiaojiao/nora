@@ -84,7 +84,7 @@ class BasicLayout extends Component {
             <div className={styles.logo}><h2>Nora</h2></div>
             <SideBar
               //collapsed={this.state.collapsed}
-              collapsed={false}
+              collapsed={collapsed}
               onSelect={this.onSelect}
               onOpenChange={this.onOpenChange}
               openKeys={openKeys}
