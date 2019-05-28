@@ -27,14 +27,16 @@ const UserMenu = (props) => {
   );
   return (
     <Dropdown overlay={menu}>
-      <Avatar className={styles.avatar} src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?h=350&amp;auto=compress&amp;cs=tinysrgb"/>
+      <Avatar className={styles.avatar}
+              src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?h=350&amp;auto=compress&amp;cs=tinysrgb"/>
     </Dropdown>
   );
 };
 
-@connect(({ global, logoutToNamespace, loading }) => ({
+@connect(({ global, logoutToNamespace, loading,accountInfo }) => ({
   global, logoutToNamespace,
   logoutLoding: loading.effects['logoutToNamespace/platformLogout'],
+  accountInfo,
 }))
 
 class BasicLayout extends Component {
@@ -74,7 +76,9 @@ class BasicLayout extends Component {
 
 
   render() {
-    const { props, global: { openKeys, selectedKeys, collapsed }, logoutLoding } = this.props;
+    const { props, global: { openKeys, selectedKeys, collapsed }, logoutLoding,accountInfo:{accountInfo}} = this.props;
+    const {userName}=accountInfo;
+
     return (
         <Layout>
           <Sider
@@ -98,7 +102,7 @@ class BasicLayout extends Component {
               {/*type={'menu-unfold'}*/}
               {/*onClick={this.toggleCollapsed}*/}
               {/*/>*/}
-              <span style={{marginRight:10}}>Hello</span>
+              <span style={{marginRight:10}}>您好,{userName}</span>
               <UserMenu props={this.props}/>
             </Header>
             <Content style={{ margin: '24px 16px 0' }}>

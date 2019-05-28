@@ -34,6 +34,10 @@ class Side extends Component {
     this.props.dispatch({
       type: 'menu/queryUserMenuTree',
     });
+
+    this.props.dispatch({
+      type: 'accountInfo/accountInfo',
+    });
   }
 
   componentWillUnmount() {

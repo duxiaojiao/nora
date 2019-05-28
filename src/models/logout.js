@@ -1,12 +1,7 @@
-import request from '../utils/request';
 import router from 'umi/router';
 import { message } from 'antd';
-import { isSuccess, platformToken } from '../common/globalConstant';
 import { logout } from '../services/logout';
 
-// async function logout(params) {
-//   return request.post(request.api.platformLogout, params);
-// }
 
 export default {
   namespace: 'logout',
