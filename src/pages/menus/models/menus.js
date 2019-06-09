@@ -5,6 +5,7 @@ export default {
   state: {
     menusList: [],
     menuSelectTree:[],
+    permission:[],
     total: null,
   },
   reducers: {
@@ -18,6 +19,12 @@ export default {
       return {
         ...state,
         menuSelectTree,
+      }
+    },
+    savePermission(state, { payload: { permission } }) {
+      return {
+        ...state,
+        permission,
       }
     }
   },
@@ -33,6 +40,10 @@ export default {
     *queryMenuSelectTree({ _ }, { call, put }) {
       const response = yield call(menusService.queryMenuSelectTree);
       yield put({ type: 'saveTree', payload: { menuSelectTree: response.data } });
+    },
+    *queryMenuPermission({ _ }, { call, put }) {
+      const response = yield call(menusService.queryMenuPermission);
+      yield put({ type: 'savePermission', payload: { permission: response.data } });
     },
     *deleteMenu({ payload }, { call, put }) {
       const response = yield call(menusService.deleteMenu, payload);

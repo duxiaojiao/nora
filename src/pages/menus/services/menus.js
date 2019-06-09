@@ -23,3 +23,7 @@ export function addMenu(data) {
 export function editMenu(data) {
   return request.post(`/system/sysMenu/editMenu`,data);
 }
+
+export function queryMenuPermission() {
+  return request.get(`/system/sysMenu/queryMenuPermission`);
+}

@@ -25,6 +25,11 @@ class Index extends Component {
      dataIndex: 'icon',
      key: 'icon',
   }, {
+     title: '类型',
+     dataIndex: 'menuType',
+     key: 'menuType',
+     render:(val)=>{if (val==='1'){return '一级菜单'} if(val==='2'){return '子菜单'} if(val==='3'){return '按钮'}},
+   }, {
     title: '操作',
     key: 'action',
     render: (text, record) => (
@@ -48,6 +53,9 @@ class Index extends Component {
     });
     this.props.dispatch({
       type: 'menus/queryMenuSelectTree',
+    });
+    this.props.dispatch({
+      type: 'menus/queryMenuPermission',
     });
   }
 

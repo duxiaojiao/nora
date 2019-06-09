@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, Form, Input,TreeSelect,InputNumber  } from 'antd';
+import { Modal, Form, Input,TreeSelect,InputNumber,Select  } from 'antd';
 import {connect} from "dva/index";
 
 const FormItem = Form.Item;
-
+const { Option } = Select;
 class MenuModal extends Component {
 
   constructor(props) {
@@ -15,10 +15,6 @@ class MenuModal extends Component {
   }
 
   componentDidMount() {
-    // console.log('测试111111');
-    // this.props.dispatch({
-    //   type: 'menus/queryMenuSelectTree',
-    // });
   }
 
   showModalHandler = (e) => {
@@ -46,9 +42,9 @@ class MenuModal extends Component {
   };
 
   render() {
-    const { children,title,menuSelectTree } = this.props;
+    const { children,title,menuSelectTree,permission } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { menuName, menuCode, router,icon,parentId,sorter} = this.props.record;
+    const { menuName, menuCode, router,icon,parentId,menuType,permissions,sorter} = this.props.record;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
@@ -131,6 +127,42 @@ class MenuModal extends Component {
             </FormItem>
             <FormItem
               {...formItemLayout}
+              label="类型"
+            >
+              {getFieldDecorator('menuType',{
+                rules: [{ required: true ,message: '请选择菜单类型！' }],
+                initialValue: menuType,
+              })(
+                <Select
+                  placeholder="选择菜单类型"
+                  // onChange={this.handleSelectChange}
+                >
+                  <Option value="1">一级菜单</Option>
+                  <Option value="2">子菜单</Option>
+                  <Option value="3">按钮</Option>
+                </Select>
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="权限标识"
+            >
+              {getFieldDecorator('permissions',{
+                initialValue: permissions,
+              })(
+                <Select
+                  mode="multiple"
+                  style={{ width: '100%' }}
+                  placeholder="请选择"
+                  // defaultValue={['a10', 'c12']}
+                  // onChange={handleChange}
+                >
+                  {permission.map((item,index)=><Option key={index} value={item.permission}>{item.name+item.method+item.mapping}</Option>)}
+                </Select>,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
               label="排序"
             >
               {getFieldDecorator('sorter',{
@@ -149,6 +181,7 @@ class MenuModal extends Component {
 function mapStateToProps(state) {
   return {
     menuSelectTree: state.menus.menuSelectTree,
+    permission:state.menus.permission,
     menusLoading: state.loading.effects['menus/queryMenuSelectTree'],
   };
 }
