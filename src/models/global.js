@@ -1,19 +1,19 @@
 import { getMenu } from '../common/menu';
 
 const pathKey = {};
-getMenu(res => {
-  if (res && res.length !== 0) {
-    res.forEach(item => {
-      if (item.children && item.children !== null) {
-        item.children.forEach(child => {
-          pathKey[child.path] = { key: child.path, openKeys: item.name };
-        });
-      } else {
-        pathKey[item.path] = { key: item.path };
-      }
-    });
-  }
-});
+// getMenu(res => {
+//   if (res && res.length !== 0) {
+//     res.forEach(item => {
+//       if (item.children && item.children !== null) {
+//         item.children.forEach(child => {
+//           pathKey[child.path] = { key: child.path, openKeys: item.name };
+//         });
+//       } else {
+//         pathKey[item.path] = { key: item.path };
+//       }
+//     });
+//   }
+// });
 
 
 export default {
