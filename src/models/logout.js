@@ -10,7 +10,7 @@ export default {
   effects: {
     * logout({ payload }, { call }) {
       const response = yield call(logout, payload);
-      if (response && response['code'] === '0') {
+      if (response && response['code'] === 0) {
         localStorage.removeItem('token');
         router.push('/login');
       } else {

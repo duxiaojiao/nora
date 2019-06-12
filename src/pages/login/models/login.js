@@ -14,11 +14,11 @@ export default {
         return;
       }
       const response = yield call(login, payload);
-      if (response && response['code'] === '0') {
+      if (response && response['code'] === 0) {
         const token = response.data.token;
         localStorage.setItem('token', token);
         router.push('/');
-      } else if (response && response['code'] === '1') {
+      } else if (response && response['code'] === 1) {
         message.error(response.msg);
       }
     },

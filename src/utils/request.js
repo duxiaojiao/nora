@@ -1,9 +1,7 @@
 import axios from 'axios';
-import { message } from 'antd';
-import router from 'umi/router';
-import api from './api';
-import { isSuccess, platformToken } from '../common/globalConstant';
+import { message,Modal } from 'antd';
 
+const confirm = Modal.confirm;
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -23,7 +21,8 @@ const codeMessage = {
 };
 
 // 全局默认配置
-axios.defaults.baseURL = api.target;
+axios.defaults.baseURL = '';
+// axios.defaults.withCredentials = true;
 axios.defaults.timeout = 10000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8;Accept-Language:zh-CN,zh;q=0.8';
 
@@ -46,30 +45,72 @@ axios.interceptors.request.use(config => {
 
 // 返回拦截器
 axios.interceptors.response.use(config => {
-  // if (config.data && config.data[isSuccess] === false && config.data.error_info.code === 401) {
-  //   router.push('/login');
-  // }
-  // return config.data;
-  // if (config && config['code'] === '1') {
-  //   router.push('/login');
-  // }
+  if (config.data.code === 1) {
+    message.warn(config.data.msg);
+  }
+  if (config.data.code === 0 && config.data.msg !== null) {
+    message.success(config.data.msg);
+  }
+  if (config.data.code === 1 && config.data.msg !== null) {
+    message.error(config.data.msg);
+  }
+  if (config.data.code === 506 && config.data.msg !== null) {
+    message.error(config.data.msg);
+  }
+  if (config.data.code === 501) {
+    confirm({
+      title: '登录已过期',
+      content: '很抱歉，登录已过期，请重新登录',
+      okText: '重新登录',
+      mask: false,
+      onOk: () => {
+        window.g_app._store.dispatch({
+          type: 'logout/logout',
+        });
+        Modal.destroyAll();
+      }
+    });
+  }
   return config.data;
 }, (error) => {
   if (error && error.response) {
     switch (error.response.status) {
-      case 500:
-        router.push('/500');
-        message.error(codeMessage[error.response.status]);
-        break;
-      case 403:
-        router.push('/403');
-        message.error(codeMessage[error.response.status]);
-        break;
-      case 404:
-        router.push('/404');
-        message.error(codeMessage[error.response.status]);
+      // case 500:
+      //   router.push('/500');
+      //   message.error(codeMessage[error.response.status]);
+      //   break;
+      // case 403:
+      //   router.push('/403');
+      //   message.error(codeMessage[error.response.status]);
+      //   break;
+      // case 404:
+      //   router.push('/404');
+      //   message.error(codeMessage[error.response.status]);
+      //   break;
+      // case 501:
+      //   confirm({
+      //     title: '登录已过期',
+      //     content: '很抱歉，登录已过期，请重新登录',
+      //     okText: '重新登录',
+      //     mask: false,
+      //     onOk: () => {
+      //       localStorage.clear();
+      //       // this.props.dispatch({
+      //       //             //   type: 'logout/logout',
+      //       //             // });
+      //       window.g_app._store.dispatch({
+      //         type: 'logout/logout',
+      //       });
+      //       Modal.destroyAll();
+      //     }
+      //   })
+      //   break
+      case 506:
+        // message.error(codeMessage[error.response.status]);
+        message.error(error.response.msg);
         break;
       default:
+        console.log('1111111',error.response);
         message.error('发生未知错误！！！');
     }
   } else if (JSON.stringify(error).indexOf('timeout') !== -1) {
@@ -104,5 +145,4 @@ const post = (url, params) => {
       });
   });
 };
-
-export default { get, post, api };
+export default { get, post};

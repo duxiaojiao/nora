@@ -76,8 +76,8 @@ class BasicLayout extends Component {
 
 
   render() {
-    const { props, global: { openKeys, selectedKeys, collapsed }, logoutLoding,accountInfo:{accountInfo}} = this.props;
-    const {userName}=accountInfo;
+    const {props, global: {openKeys, selectedKeys, collapsed}, logoutLoding, accountInfo: {accountInfo}} = this.props;
+    const userName = accountInfo ? accountInfo.userName : "";
 
     return (
         <Layout>

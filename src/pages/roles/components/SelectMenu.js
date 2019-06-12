@@ -41,7 +41,7 @@ class SelectMenu extends Component {
 
   okHandler = () => {
     const {onOk} = this.props;
-    onOk(this.state.checkedKeys);
+    onOk(this.state.checkedKeys.checked||this.state.checkedKeys);
     this.hideModelHandler();
   };
 
@@ -73,7 +73,8 @@ class SelectMenu extends Component {
       >
         <Tree
           treeData={this.props.treeData}
-          checkable={true}
+          checkable
+          checkStrictly
           defaultExpandedKeys={this.state.checkedKeys}
           defaultSelectedKeys={this.state.checkedKeys}
           defaultCheckedKeys={this.state.checkedKeys}
