@@ -56,6 +56,7 @@ axios.interceptors.response.use(config => {
   }
   if (config.data.code === 506 && config.data.msg !== null) {
     message.error(config.data.msg);
+    return Promise.reject('error')
   }
   if (config.data.code === 501) {
     confirm({
@@ -70,6 +71,7 @@ axios.interceptors.response.use(config => {
         Modal.destroyAll();
       }
     });
+    return Promise.reject('error')
   }
   return config.data;
 }, (error) => {
