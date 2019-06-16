@@ -21,7 +21,7 @@ const codeMessage = {
 };
 
 // 全局默认配置
-axios.defaults.baseURL = '';
+axios.defaults.baseURL = '/nora';
 // axios.defaults.withCredentials = true;
 axios.defaults.timeout = 10000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8;Accept-Language:zh-CN,zh;q=0.8';

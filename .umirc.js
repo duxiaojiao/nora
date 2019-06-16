@@ -27,8 +27,8 @@ export default {
   ],
 
   proxy: {
-    "/system": {
-      target: "http://localhost:8100/",
+    "/nora": {
+      target: "http://localhost:8100",
       changeOrigin: true,
       // pathRewrite: {"^/system": ""}
     }
